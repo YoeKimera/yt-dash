@@ -17,6 +17,21 @@ Una aplicación de escritorio desarrollada en Python que proporciona una interfa
 - 📊 **Barra de progreso** - Visualiza el progreso de la descarga
 - 📝 **Registro de actividad** - Mantiene un log de todas las operaciones
 
+## 📁 Estructura del Proyecto
+
+```
+yt-dash/
+├── yt_dash.py              # Aplicación principal con GUI
+├── yt_dash_cli.py          # Versión de línea de comandos
+├── check_environment.py    # Verificador de entorno
+├── test_yt_dash.py         # Tests de funcionalidad
+├── requirements.txt        # Dependencias de Python
+├── README.md               # Este archivo
+├── USAGE.md                # Guía detallada de uso
+├── QUICKSTART.md           # Guía de inicio rápido
+└── .gitignore              # Archivos ignorados por Git
+```
+
 ## 📋 Requisitos
 
 - Python 3.8 o superior
@@ -48,7 +63,7 @@ Una aplicación de escritorio desarrollada en Python que proporciona una interfa
 
 ## 💻 Uso
 
-**Ejecuta la aplicación:**
+**Ejecuta la aplicación con interfaz gráfica:**
 ```bash
 python yt_dash.py
 ```
@@ -59,7 +74,19 @@ chmod +x yt_dash.py
 ./yt_dash.py
 ```
 
-### Pasos para descargar:
+**Alternativamente, usa la versión CLI (sin interfaz gráfica):**
+```bash
+python yt_dash_cli.py
+# o con una URL directa
+python yt_dash_cli.py https://www.youtube.com/watch?v=VIDEO_ID
+```
+
+La versión CLI es útil para:
+- Sistemas sin interfaz gráfica (servidores)
+- Automatización con scripts
+- Usuarios que prefieren la terminal
+
+### Pasos para descargar (GUI):
 
 1. **Copia la URL** del video de YouTube que deseas descargar
 2. **Pega la URL** en el campo correspondiente
