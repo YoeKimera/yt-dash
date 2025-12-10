@@ -84,8 +84,31 @@ def download_video(url, format_type='mp4', quality='best', output_dir=None):
             print(f"\n✓ ¡Descarga exitosa!")
             print(f"📁 Archivo: {title}")
             return True
+    except yt_dlp.utils.DownloadError as e:
+        error_msg = str(e)
+        if 'HTTP Error' in error_msg:
+            print(f"\n✗ Error de red: No se pudo conectar al servidor")
+            print(f"   Verifica tu conexión a Internet")
+        elif 'Video unavailable' in error_msg or 'not available' in error_msg.lower():
+            print(f"\n✗ Error: El video no está disponible")
+            print(f"   Puede ser privado, estar bloqueado en tu región o haber sido eliminado")
+        else:
+            print(f"\n✗ Error al descargar: {error_msg}")
+        return False
+    except yt_dlp.utils.ExtractorError as e:
+        print(f"\n✗ Error: URL inválida o formato no soportado")
+        print(f"   Asegúrate de que la URL sea de YouTube")
+        return False
+    except PermissionError:
+        print(f"\n✗ Error: No tienes permisos para escribir en el directorio")
+        print(f"   Verifica los permisos de: {output_dir}")
+        return False
+    except KeyboardInterrupt:
+        print(f"\n✗ Descarga cancelada por el usuario")
+        return False
     except Exception as e:
-        print(f"\n✗ Error: {str(e)}")
+        print(f"\n✗ Error inesperado: {str(e)}")
+        print(f"   Si el problema persiste, revisa los logs o reporta el issue")
         return False
 
 

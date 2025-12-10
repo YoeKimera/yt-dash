@@ -81,9 +81,19 @@ def main():
     if check_module('yt_dlp', 'yt-dlp'):
         try:
             import yt_dlp
-            print(f"  Versión de yt-dlp: {yt_dlp.version.__version__}")
+            # Intentar diferentes formas de obtener la versión
+            version = None
+            if hasattr(yt_dlp, 'version') and hasattr(yt_dlp.version, '__version__'):
+                version = yt_dlp.version.__version__
+            elif hasattr(yt_dlp, '__version__'):
+                version = yt_dlp.__version__
+            
+            if version:
+                print(f"  Versión de yt-dlp: {version}")
+            else:
+                print("  Versión de yt-dlp: instalado (versión no disponible)")
         except Exception as e:
-            print(f"  No se pudo obtener la versión: {e}")
+            print(f"  yt-dlp instalado (no se pudo obtener la versión)")
     else:
         print("  Instala con: pip install -r requirements.txt")
         checks.append(False)

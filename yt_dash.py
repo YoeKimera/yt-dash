@@ -194,8 +194,25 @@ class YTDashGUI:
                 title = info.get('title', 'Video')
                 self.log(f"✓ Descarga completada exitosamente: {title}")
                 
+        except yt_dlp.utils.DownloadError as e:
+            error_msg = str(e)
+            if 'HTTP Error' in error_msg:
+                self.log("✗ Error de red: No se pudo conectar al servidor")
+                self.log("  Verifica tu conexión a Internet")
+            elif 'Video unavailable' in error_msg or 'not available' in error_msg.lower():
+                self.log("✗ Error: El video no está disponible")
+                self.log("  Puede ser privado, estar bloqueado o haber sido eliminado")
+            else:
+                self.log(f"✗ Error al descargar: {error_msg}")
+        except yt_dlp.utils.ExtractorError:
+            self.log("✗ Error: URL inválida o formato no soportado")
+            self.log("  Asegúrate de que la URL sea de YouTube")
+        except PermissionError:
+            self.log(f"✗ Error: No tienes permisos para escribir en el directorio")
+            self.log(f"  Verifica los permisos de: {self.download_path.get()}")
         except Exception as e:
-            self.log(f"✗ Error durante la descarga: {str(e)}")
+            self.log(f"✗ Error inesperado: {str(e)}")
+            self.log("  Si el problema persiste, revisa la configuración")
         finally:
             self.is_downloading = False
             self.download_btn.config(state="normal", text="Descargar")

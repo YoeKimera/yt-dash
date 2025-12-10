@@ -10,7 +10,17 @@ import os
 try:
     import yt_dlp
     print("✓ yt-dlp está instalado correctamente")
-    print(f"  Versión: {yt_dlp.version.__version__}")
+    # Intentar obtener la versión de forma segura
+    try:
+        if hasattr(yt_dlp, 'version') and hasattr(yt_dlp.version, '__version__'):
+            version = yt_dlp.version.__version__
+        elif hasattr(yt_dlp, '__version__'):
+            version = yt_dlp.__version__
+        else:
+            version = "desconocida"
+        print(f"  Versión: {version}")
+    except Exception:
+        print("  Versión: instalado (versión no disponible)")
 except ImportError:
     print("✗ Error: yt-dlp no está instalado")
     print("  Ejecuta: pip install -r requirements.txt")
